@@ -38,16 +38,14 @@ class TripDetailPresenter: ObservableObject {
     @Published var distanceLabel: String = "Calculating..."
     @Published var waypoints: [Waypoint] = []
     
-    let setTripName: Binding<String>
+    lazy var setTripName: Binding<String> = Binding<String>(
+        get: { self.tripName },
+        set: { self.interactor.setTripName($0) }
+    )
     
     init(interactor: TripDetailInteractor) {
         self.interactor = interactor
         self.router = TripDetailRouter(mapProvider: interactor.mapInfoProvider)
-        
-        setTripName = Binding<String>(
-            get: { interactor.tripName },
-            set: { interactor.setTripName($0) }
-        )
         
         interactor.tripNamePublisher
             .assign(to: \.tripName, on: self)

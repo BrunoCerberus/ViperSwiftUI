@@ -35,7 +35,7 @@ struct TripListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(presenter.trips, id: \.id) { trip in
+                ForEach(presenter.trips) { trip in
                     self.presenter.linkBuilder(for: trip) {
                         TripListCell(trip: trip)
                             .frame(height: 240)
@@ -43,6 +43,7 @@ struct TripListView: View {
                 }
                 .onDelete(perform: presenter.deleteTrip)
             }
+            
             .navigationBarTitle(Text("RoadTrips"), displayMode: .inline)
             .navigationBarItems(trailing: presenter.makeAddNewButton())
         }
